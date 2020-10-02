@@ -42,8 +42,8 @@ def init():
     """
     Llama la funcion de inicializacion del modelo.
     """
-
-    return None
+    catalog=model.inicializar_catalogo()
+    return catalog
 
 
 # ___________________________________________________
@@ -55,9 +55,27 @@ def loadData(analyzer, accidentsfile):
     """
     Carga los datos de los archivos CSV en el modelo
     """
-    
+    Archivo = cf.data_dir + accidentsfile
+    input_file = csv.DictReader(open(Archivo, encoding="utf-8"),
+                                delimiter=",")
+    for Accidente in input_file:
+        model.añadirAccidente(analyzer, Accidente)
     return analyzer
 
 # ___________________________________________________
 #  Funciones para consultas
 # ___________________________________________________
+def sizeArbol(analyzer):
+    size=model.size_Arbol(analyzer)
+    return size
+
+def Dar_cantidad_por_fecha(catalog,Fecha):
+    initialDate = datetime.datetime.strptime(Fecha, '%Y-%m-%d')
+    size,lista= model.Accidente_Fecha_severidad(catalog,initialDate.date())
+    return size,lista
+def sizeAccidentes(catalog):
+    size=model.tamaño_Accidentes(catalog)
+    return size
+def Altura(catalog):
+    size=model.alturA_arbol(catalog)
+    return size

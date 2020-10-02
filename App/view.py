@@ -24,7 +24,8 @@ import sys
 import config
 from App import controller
 assert config
-
+from DISClib.DataStructures import listiterator as it
+from DISClib.ADT import list as lt
 """
 La vista se encarga de la interacción con el usuario.
 Presenta el menu de opciones  y  por cada seleccion
@@ -37,8 +38,8 @@ operación seleccionada.
 # ___________________________________________________
 
 
-crimefile = 'crime-utf8.csv'
-
+Archiaccidentes = 'us_accidents_dis_2016.csv'
+Archiaccidentes = 'US_Accidents_Dec19.csv'
 # ___________________________________________________
 #  Menu principal
 # ___________________________________________________
@@ -66,16 +67,30 @@ while True:
     if int(inputs[0]) == 1:
         print("\nInicializando....")
         # cont es el controlador que se usará de acá en adelante
-        cont = controller.init()
+        Analyzer = controller.init()
+        print("Se ha inicializado el catalogo...")
 
     elif int(inputs[0]) == 2:
-        print("\nCargando información de crimenes ....")
+        print("\nCargando información de accidentes ....\n")
+        controller.loadData(Analyzer,Archiaccidentes)
+        print('Accidentes cargados: ' + str(controller.sizeAccidentes(Analyzer)))
+        print('Fechas cargadas: ' + str(controller.sizeArbol(Analyzer)),"\n")
+        print('La altura del arbol es: ' + str(controller.Altura(Analyzer)),"\n")
 
     elif int(inputs[0]) == 3:
-        print("\nBuscando crimenes en un rango de fechas: ")
+        Fecha=input('Ingrese una fecha en este formato (YYYY-MM-DD)\n>')
+        tamaño,lista=controller.Dar_cantidad_por_fecha(Analyzer,Fecha)
+        print("\nSe encontraron",tamaño,"accidentes registrados en la fecha",Fecha)
+        iterador=it.newIterator(lista)
+        while it.hasNext(iterador):
+            element=it.next(iterador)
+            Severidad=element["Severidad"]
+            size=lt.size(element["Lista_Accidentes"])
+            print("La severidad",Severidad,"tiene",size,"Accidentes")
+
 
     elif int(inputs[0]) == 4:
-        print("\nRequerimiento No 1 del reto 3: ")
+        print("\nnadaxd: ")
 
     else:
         sys.exit(0)
