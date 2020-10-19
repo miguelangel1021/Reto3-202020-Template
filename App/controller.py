@@ -79,3 +79,14 @@ def sizeAccidentes(catalog):
 def Altura(catalog):
     size=model.alturA_arbol(catalog)
     return size
+def Accidentes_rango(catalog,Fecha_inical,Fecha_final):
+    initialDate = datetime.datetime.strptime(Fecha_inical, '%Y-%m-%d')
+    FinalDate = datetime.datetime.strptime(Fecha_final, '%Y-%m-%d')
+    cantidad,mayor,severidad=model.Accidentes_en_Rango(catalog,initialDate.date(),FinalDate.date())
+    return cantidad,mayor,severidad
+def Accidentes_Hora(catalog,Horainicial,Horafinal):
+    total,severidades,porcentaje=model.Accidentes_por_hora(catalog,Horainicial,Horafinal)
+    return total,severidades,porcentaje
+def Accidentes_en_radio(catalog,lat,long,radio,medida_r):
+    diccionario,total=model.Accidentes_en_radio(catalog,lat,long,radio,medida_r)
+    return diccionario,total 

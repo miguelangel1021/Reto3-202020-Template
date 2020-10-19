@@ -39,7 +39,9 @@ operación seleccionada.
 
 
 Archiaccidentes = 'us_accidents_dis_2016.csv'
-Archiaccidentes = 'US_Accidents_Dec19.csv'
+Archiaccidentes ="test3.csv"
+Archiaccidentes="US_Accidents_Dec19.csv"
+
 # ___________________________________________________
 #  Menu principal
 # ___________________________________________________
@@ -51,8 +53,10 @@ def printMenu():
     print("Bienvenido")
     print("1- Inicializar Analizador")
     print("2- Cargar información de accidentes")
-    print("3- Requerimento 1")
-    print("4- Requerimento 2")
+    print("3- Accidente por fecha")
+    print("4- Accidentes en rango de fechas")
+    print("5- Accidentes en rango de horas")
+    print("6- Accidentes en radio")
     print("0- Salir")
     print("*******************************************")
 
@@ -87,11 +91,34 @@ while True:
             Severidad=element["Severidad"]
             size=lt.size(element["Lista_Accidentes"])
             print("La severidad",Severidad,"tiene",size,"Accidentes")
-
-
+    
     elif int(inputs[0]) == 4:
-        print("\nnadaxd: ")
-
+        Fecha_inical=input("ingrese el rango inicial (YYYY-MM-DD):")
+        Fecha_final=input(("ingrese el rango final (YYYY-MM-DD):"))
+        cantidad,mayor,severidad=controller.Accidentes_rango(Analyzer,Fecha_inical,Fecha_final)
+        print("\nSe encontraron",cantidad,"accidentes registrados en el rango de fechas")
+        print("La severidad con mayor cantidad de accidentes en esta fecha fue la severidad",severidad,"con un numero de",mayor,"Accidentes\n")
+    
+    elif int(inputs[0]) == 5:
+        Hora_inicla=input("Ingrese la hora inical (HH:MM):")
+        Hora_final=input("Ingrese la hora final (HH:MM):")
+        total,Diccionario,porcentaje=controller.Accidentes_Hora(Analyzer,Hora_inicla,Hora_final)
+        print("Hay un numero de",total,"accidentes en este rango de horas")
+        print(Diccionario["1"],"de severidad 1")
+        print(Diccionario["2"],"de severidad 2")
+        print(Diccionario["3"],"de severidad 3")
+        print(Diccionario["4"],"de severidad 4")
+        print("Este numero de accidentes equivalen a el",str(porcentaje)+"%","de los accidentes." )
+    
+    elif int(inputs[0]) == 6:
+        lat=input("Ingrese la latitud:")
+        longi=input("Ingrese la longitud:")
+        medida_rad=input("Indique la unidad de medida del radio (M (millas), Kl (kilometros)):")
+        radio=input("Ingrese la medida del radio:")
+        Diccionario,total=controller.Accidentes_en_radio(Analyzer,lat,longi,radio,medida_rad)
+        print("El total de los acidentes a la redonda de el punto es",total)
+        for key,value in Diccionario.items():
+            print("En la fecha",key,"se encontraron",value,"accidentes")
     else:
         sys.exit(0)
 sys.exit(0)
