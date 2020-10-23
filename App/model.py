@@ -151,7 +151,7 @@ def Accidentes_en_Rango(catalog,Fecha_inicial,Fecha_final):
     if sev3>mayor:
         mayor=sev3
         severidad_es="3"
-     if sev4>mayor:
+    if sev4>mayor:
         mayor=sev4
         severidad_es="4"
     
