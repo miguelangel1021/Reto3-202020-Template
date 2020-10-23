@@ -38,9 +38,9 @@ operación seleccionada.
 # ___________________________________________________
 
 
-Archiaccidentes = 'us_accidents_dis_2016.csv'
+
 Archiaccidentes ="test3.csv"
-Archiaccidentes="US_Accidents_Dec19.csv"
+
 
 # ___________________________________________________
 #  Menu principal

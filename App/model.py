@@ -148,10 +148,10 @@ def Accidentes_en_Rango(catalog,Fecha_inicial,Fecha_final):
     if sev2>mayor:
         mayor=sev2
         severidad_es="2"
-    elif sev3>mayor:
+    if sev3>mayor:
         mayor=sev3
         severidad_es="3"
-    elif sev4>mayor:
+     if sev4>mayor:
         mayor=sev4
         severidad_es="4"
     
@@ -235,8 +235,8 @@ def Accidentes_en_radio(catalog,latitud,longitud,radio,medida_r):
         radio=float(radio)*1.609
     else:
         radio=float(radio)
-    Latitud=float(latitud)*111.12
-    Longitud=float(longitud)*111.32
+    Latitud=float(latitud)/ 57.29577951
+    Longitud=float(longitud)/ 57.29577951
     total=0
     maximo=om.maxKey(catalog['Indice_fechas'])
     minimo=om.minKey(catalog['Indice_fechas'])
@@ -249,10 +249,11 @@ def Accidentes_en_radio(catalog,latitud,longitud,radio,medida_r):
         iterador2= it.newIterator(lista)
         while it.hasNext(iterador2):
             accidente=it.next(iterador2)
-            latitud2=float(accidente["Start_Lat"])*111.12
-            longitud2=float(accidente["Start_Lng"])*111.32
-            diferencia=(((latitud2-Latitud)**2)+((longitud2-Longitud)**2))**(1/2)
-            if diferencia<=radio:
+            latitud2=float(accidente["Start_Lat"])/57.29577951
+            longitud2=float(accidente["Start_Lng"])/ 57.29577951
+            distancia= 3963.0 * math.acos(math.sin(Latitud)*math.sin(latitud2)+math.cos(Latitud)*math.cos(latitud2)*math.cos(longitud2 - Longitud))
+            distancia*=1.609344
+            if distancia<=radio:
                 total+=1
                 Fecha = accidente['Start_Time']
                 Fecha_accidente = datetime.datetime.strptime(Fecha, '%Y-%m-%d %H:%M:%S')
